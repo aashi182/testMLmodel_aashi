@@ -1,0 +1,71 @@
+# months of high tourism in north atlantic cities with beaches
+gulfOfMaine = ["july", "august"]
+boston = ["june", "july", "august"]
+longIsland = ["may", "june", "july", "august", "september"]
+keyWest = ["april", "may", "june", "july", "august"]
+
+# prime migration months for north atlantic native marine animals
+seaTurtle = ["march", "april", "may", "june", "july", "august", "september", "october", "november"]
+greatWhiteShark = ["september", "october", "november"]
+floridaManatee = ["december", "january", "february", "march"]
+horseshoeCrabs = ["april", "may", "june"]
+
+ultimateList = [seaTurtle, greatWhiteShark, floridaManatee, horseshoeCrabs]
+
+ultimateListStringForm = ["sea turtles", "great white sharks", "Florida manatees", "horseshoe crabs"]
+# other vars--------------------------------------------------------------------------------
+risks = []
+finalListOfMonths = []
+cityOrigin = input("Enter city:")
+city = cityOrigin
+
+
+#set city---------------------------------------------------------------------------------
+if city.lower() == "key west":
+    city = keyWest
+
+elif city.lower() == "boston":
+    city = boston
+
+elif city.lower() == "long island":
+    city = longIsland
+
+elif city.lower() == "gulf of maine":
+    city = gulfOfMaine
+else:
+    print("That is not a city we have data on yet - sorry!")
+    quit()
+
+#counts months that the migration season and tourist season have in common
+def giveMonthCount(animalsList, cityList):
+    monthCount = 0
+    for month in animalsList:
+            for m in cityList:
+                if month == m:
+                    monthCount+=1
+
+    return monthCount
+
+#appends the months in common to a list for all the animals
+def appendInfo():
+    for animals in ultimateList:
+        finalListOfMonths.append(giveMonthCount(animals,city))
+
+    return finalListOfMonths
+
+#returns the risk levels based on month frequency
+def returnRiskLevels(aListOfMonths):
+    for elem in aListOfMonths:
+        if elem < 2:
+            risks.append("MEDIUM")
+        elif elem > 2 and elem < 4:
+            risks.append("HIGH")
+        risks.append("VERY HIGH")
+
+    return risks
+
+def main():
+    formatList = returnRiskLevels(appendInfo())
+    for x in range(4):
+        print("The risk level for " + ultimateListStringForm[x] + " during " + cityOrigin + "'s tourism season is " + formatList[x] + ".\n")
+main()
